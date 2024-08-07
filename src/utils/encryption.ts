@@ -44,7 +44,7 @@ export async function decryptFile(path: string, privateKey = askPrivateKey()) {
   const content = readFile(`${path}.enc`);
 
   const withoutArmor = Buffer.from(
-    content.trimStart().trimEnd().replace(header, '').replace(footer, ''),
+    content.trim().replace(header, '').replace(footer, ''),
     'base64',
   );
   return decrypter.decrypt(withoutArmor, 'text');
@@ -64,6 +64,12 @@ export async function reEncryptFile(
 ): Promise<void> {
   const content = await decryptFile(path, privateKey);
   const processedContent = await processContent(content);
+
+  if (content === processedContent) {
+    console.log('Secret file not changed.');
+    return;
+  }
+
   writeFile(`${path}.enc`, await encryptMessage(processedContent));
 }
 

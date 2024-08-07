@@ -1,8 +1,8 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { option, optional, string } from 'cmd-ts';
 import prompt from 'prompt-sync';
-import { writeFile } from './readWrite';
+import { readFile, writeFile } from './readWrite';
 
 const homeDir =
   process.platform === 'win32' ? process.env.USERPROFILE : process.env.HOME;
@@ -20,7 +20,7 @@ export const privateKey = option({
 
 export function askPrivateKey() {
   if (privateKeyFilePath && existsSync(privateKeyFilePath)) {
-    return readFileSync(privateKeyFilePath, 'utf-8');
+    return readFile(privateKeyFilePath);
   }
 
   console.log();
