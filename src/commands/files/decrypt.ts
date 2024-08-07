@@ -1,4 +1,4 @@
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import { boolean, command, flag, restPositionals } from 'cmd-ts';
 import { ResolvedPath } from '../../utils/File';
 import { configFile } from '../../utils/configFile';
@@ -27,7 +27,7 @@ export default command({
     const paths =
       explicitPaths.length > 0
         ? explicitPaths
-        : config.files.map((path) => resolve(configFilePath, path));
+        : config.files.map((path) => resolve(dirname(configFilePath), path));
 
     for (const file of paths) {
       if (toStdout) {
