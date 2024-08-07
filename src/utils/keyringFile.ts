@@ -9,18 +9,16 @@ const KeyringFileSchema = v.object({
 
 export type KeyringFile = v.InferOutput<typeof KeyringFileSchema>;
 
-export async function keyringFile() {
+export async function keyringFile(): Promise<KeyringFile> {
   const [config] = await configFile();
   const response = await fetch(config.keyring);
   const body = await response.json();
-  return parseKeyringFile(body);
-}
 
-export function parseKeyringFile(data: unknown): KeyringFile {
-  const result = v.safeParse(KeyringFileSchema, data);
+  const result = v.safeParse(KeyringFileSchema, body);
+
   if (!result.success) {
     console.log(v.flatten<typeof KeyringFileSchema>(result.issues));
-    throw new Error('Invalid config file.');
+    throw new Error(`Invalid keyring file: ${config.keyring}`);
   }
 
   return result.output;

@@ -1,8 +1,10 @@
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
+import { relative } from 'node:path';
 
 export function writeFile(path: string, content: string) {
   writeFileSync(path, content, 'utf-8');
-  console.log(`Written ${path}`);
+  const relativePath = relative(process.cwd(), path);
+  console.log(`Written ${relativePath}`);
 }
 
 export function readFile(path: string) {
@@ -11,7 +13,8 @@ export function readFile(path: string) {
 
 export function deleteFile(path: string) {
   if (existsSync(path)) {
-    unlinkSync(`${path}.enc`);
-    console.log(`Deleted ${path}`);
+    unlinkSync(path);
+    const relativePath = relative(process.cwd(), path);
+    console.log(`Deleted ${relativePath}`);
   }
 }
