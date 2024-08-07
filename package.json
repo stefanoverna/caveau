@@ -1,6 +1,6 @@
 {
   "name": "caveau",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Easy file repository encryption tool based on age, focused on simplicity and gitops",
   "main": "index.js",
   "type": "module",
@@ -11,7 +11,11 @@
     "prepare": "npm run build",
     "format": "biome check --write --unsafe"
   },
-  "files": ["bin", "dist", "schemas"],
+  "files": [
+    "bin",
+    "dist",
+    "schemas"
+  ],
   "author": "Stefano Verna <s.verna@datocms.com>",
   "license": "MIT",
   "dependencies": {
