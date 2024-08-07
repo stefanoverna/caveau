@@ -1,20 +1,11 @@
-import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join, resolve } from 'node:path';
 import { command } from 'cmd-ts';
 import {
   configFilename,
   findConfigFilePath,
   writeConfigFile,
 } from '../utils/configFile';
-import { readFile } from '../utils/readWrite';
-
-const __filename = fileURLToPath(import.meta.url);
-const packageJsonPath = resolve(
-  dirname(__filename),
-  '..',
-  '..',
-  'package.json',
-);
+import { packageVersion } from '../utils/packageVersion';
 
 class ConfigFileAlreadyExists extends Error {}
 
@@ -35,11 +26,9 @@ export default command({
 
       const path = join(resolve(), configFilename);
 
-      const version = JSON.parse(readFile(packageJsonPath)).version as string;
-
       await writeConfigFile(
         {
-          $schema: `https://unpkg.com/caveau@${version}/schemas/config.json`,
+          $schema: `https://unpkg.com/caveau@${packageVersion}/schemas/config.json`,
           keyring: '',
           recipients: { type: 'all' },
           files: [],

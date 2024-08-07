@@ -78,7 +78,7 @@ export async function processAndMaybeReEncryptFile(
 export async function reEncryptFile(
   path: string,
   privateKey = askPrivateKey(),
-): Promise<boolean> {
+): Promise<void> {
   const content = await decryptFile(path, privateKey);
   writeFile(`${path}.enc`, await encryptMessage(content));
 }

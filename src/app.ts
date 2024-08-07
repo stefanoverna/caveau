@@ -10,9 +10,11 @@ import filesEdit from './commands/files/edit';
 import filesReencrypt from './commands/files/reencrypt';
 import filesRemove from './commands/files/remove';
 
+import { packageVersion } from './utils/packageVersion';
+
 export default subcommands({
   name: 'caveau',
-  version: '0.1.0',
+  version: packageVersion,
   cmds: {
     init,
     'keys:generate': keysGenerate,
