@@ -1,6 +1,6 @@
 {
   "name": "caveau",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "description": "Easy file repository encryption tool based on age, focused on simplicity and gitops",
   "main": "index.js",
   "type": "module",
