@@ -1,6 +1,6 @@
 import { dirname, relative } from 'node:path';
 import { command, positional } from 'cmd-ts';
-import parser from 'gitignore-parser';
+import ignore from 'ignore';
 import { sortedUniq } from 'lodash-es';
 import { File } from '../../utils/File';
 import { configFile } from '../../utils/configFile';
@@ -32,10 +32,11 @@ export default command({
 
     const gitIgnorePath = await safeFindNearestFile('.gitignore');
     if (gitIgnorePath) {
-      const gitIgnore = parser.compile(readFile(gitIgnorePath));
+      const gitIgnore = ignore().add(readFile(gitIgnorePath));
+
       const relativePathForGitIgnore = relative(dirname(gitIgnorePath), path);
 
-      if (!gitIgnore.denies(relativePathForGitIgnore)) {
+      if (!gitIgnore.ignores(relativePathForGitIgnore)) {
         console.log();
         console.log(
           `WARNING: ${relativePathToCwd} is NOT excluded by .gitignore!`,
