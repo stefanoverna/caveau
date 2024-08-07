@@ -1,4 +1,4 @@
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import age from 'age-encryption';
 import { configFile } from './configFile';
 import { recipientPublicKeys } from './keyringFile';
@@ -90,7 +90,7 @@ export async function reEncryptAllFiles(
   const [config, _, configFilePath] = await configFile();
 
   for (const file of config.files.map((path) =>
-    resolve(configFilePath, path),
+    resolve(dirname(configFilePath), path),
   )) {
     await reEncryptFile(file, privateKey);
   }

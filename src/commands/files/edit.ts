@@ -1,7 +1,7 @@
 import { boolean, command, flag, positional } from 'cmd-ts';
 import openEditor from 'open-editor';
 import { temporaryFileTask } from 'tempy';
-import { File } from '../../utils/File';
+import { ResolvedPath } from '../../utils/File';
 import {
   decryptFileAndWrite,
   processAndMaybeReEncryptFile,
@@ -14,7 +14,7 @@ export default command({
   description: 'Open a file editor to change the contents, and re-encrypt it',
   args: {
     path: positional({
-      type: File,
+      type: ResolvedPath,
       displayName: 'Path of the secret file to edit',
     }),
     privateKey,

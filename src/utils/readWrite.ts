@@ -1,4 +1,11 @@
-import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
+import {
+  accessSync,
+  existsSync,
+  readFileSync,
+  statSync,
+  unlinkSync,
+  writeFileSync,
+} from 'node:fs';
 import { relative } from 'node:path';
 
 export function writeFile(path: string, content: string, mode = 0o666) {
@@ -8,6 +15,13 @@ export function writeFile(path: string, content: string, mode = 0o666) {
 }
 
 export function readFile(path: string) {
+  accessSync(path);
+  const statResult = statSync(path);
+
+  if (!statResult.isFile()) {
+    throw new Error(`Could not find file: ${path}`);
+  }
+
   return readFileSync(path, { encoding: 'utf-8' });
 }
 
