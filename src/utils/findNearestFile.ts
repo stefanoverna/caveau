@@ -35,6 +35,6 @@ export async function safeFindNearestFile(
       return false;
     }
 
-    return findNearestFile(fileName, parentDirectoryPath);
+    return safeFindNearestFile(fileName, parentDirectoryPath);
   }
 }

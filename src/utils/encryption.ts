@@ -1,18 +1,28 @@
 import { dirname, resolve } from 'node:path';
 import age from 'age-encryption';
 import { configFile } from './configFile';
-import { recipientPublicKeys } from './keyringFile';
+import { findRecipientIds, findRecipientPublicKeys } from './keyringFile';
 import { askPrivateKey } from './prompt';
 import { readFile, writeFile } from './readWrite';
 
 const header = '-----BEGIN AGE ENCRYPTED FILE-----';
 const footer = '-----END AGE ENCRYPTED FILE-----';
 
+let recipientsAlreadyCommunicated = false;
+
 export async function encryptMessage(message: string): Promise<string> {
   const { Encrypter } = await age();
   const encrypter = new Encrypter();
 
-  for (const publicKey of await recipientPublicKeys()) {
+  if (!recipientsAlreadyCommunicated) {
+    recipientsAlreadyCommunicated = true;
+    const recipientIds = await findRecipientIds();
+    console.log(
+      `Encrypting for the following recipients: ${recipientIds.join(', ')}`,
+    );
+  }
+
+  for (const publicKey of await findRecipientPublicKeys()) {
     encrypter.addRecipient(publicKey);
   }
 

@@ -1,7 +1,7 @@
 import fetch from 'cross-fetch';
 import { uniq } from 'lodash-es';
 import * as v from 'valibot';
-import { type ConfigFile, configFile } from './configFile';
+import { configFile } from './configFile';
 
 const KeyringFileSchema = v.object({
   $schema: v.optional(v.pipe(v.string(), v.url())),
@@ -26,13 +26,23 @@ export async function keyringFile(): Promise<KeyringFile> {
   return result.output;
 }
 
-function findRecipientIds(
-  recipients: Exclude<ConfigFile['recipients'], { type: 'all' }>,
-  keyring: KeyringFile,
-) {
-  let ids = recipients.publicKeyIds || [];
+export async function findRecipientIds() {
+  const [config] = await configFile();
+  const keyring = await keyringFile();
 
-  const teamIds = recipients.teamIds;
+  if (config.recipients.type === 'all') {
+    const ids = Object.keys(keyring.publicKeys);
+
+    if (ids.length === 0) {
+      throw new Error('No recipients defined in config file.');
+    }
+
+    return uniq(ids);
+  }
+
+  let ids = config.recipients.publicKeyIds || [];
+
+  const teamIds = config.recipients.teamIds;
 
   if (teamIds) {
     ids = [
@@ -47,29 +57,22 @@ function findRecipientIds(
     ];
   }
 
-  return ids;
-}
-
-export async function recipientPublicKeys() {
-  const [config] = await configFile();
-  const keyring = await keyringFile();
-
-  const publicKeys =
-    config.recipients.type === 'all'
-      ? Object.values(keyring.publicKeys)
-      : findRecipientIds(config.recipients, keyring).map((id) => {
-          if (!(id in keyring.publicKeys)) {
-            throw new Error(
-              `No public key for recipient "${id}" found in keyring.`,
-            );
-          }
-
-          return keyring.publicKeys[id];
-        });
-
-  if (publicKeys.length === 0) {
+  if (ids.length === 0) {
     throw new Error('No recipients defined in config file.');
   }
 
-  return uniq(publicKeys);
+  return uniq(ids);
+}
+
+export async function findRecipientPublicKeys() {
+  const keyring = await keyringFile();
+  const recipientIds = await findRecipientIds();
+
+  return recipientIds.map((id) => {
+    if (!(id in keyring.publicKeys)) {
+      throw new Error(`No public key for recipient "${id}" found in keyring.`);
+    }
+
+    return keyring.publicKeys[id];
+  });
 }
