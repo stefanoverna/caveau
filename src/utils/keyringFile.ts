@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch';
+import { uniq } from 'lodash-es';
 import * as v from 'valibot';
 import { type ConfigFile, configFile } from './configFile';
 
@@ -70,5 +71,5 @@ export async function recipientPublicKeys() {
     throw new Error('No recipients defined in config file.');
   }
 
-  return publicKeys;
+  return uniq(publicKeys);
 }
