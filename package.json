@@ -23,6 +23,7 @@
     "age-encryption": "^0.1.5",
     "cmd-ts": "^0.13.0",
     "cross-fetch": "^4.0.0",
+    "gitignore-parser": "^0.0.2",
     "lodash-es": "^4.17.21",
     "open-editor": "^5.0.0",
     "prompt-sync": "^4.2.0",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
+    "@types/gitignore-parser": "^0.0.3",
     "@types/node": "^22.1.0",
     "@types/prompt-sync": "^4.2.3",
     "np": "^10.0.7",

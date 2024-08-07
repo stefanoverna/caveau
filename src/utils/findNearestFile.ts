@@ -5,6 +5,19 @@ export async function findNearestFile(
   fileName: string,
   directoryPath: string = resolve(),
 ): Promise<string> {
+  const result = await safeFindNearestFile(fileName, directoryPath);
+
+  if (!result) {
+    throw new Error(`No "${fileName}" file found.`);
+  }
+
+  return result;
+}
+
+export async function safeFindNearestFile(
+  fileName: string,
+  directoryPath: string = resolve(),
+): Promise<string | false> {
   try {
     const path = join(directoryPath, fileName);
     await access(path);
@@ -19,7 +32,7 @@ export async function findNearestFile(
     const parentDirectoryPath = dirname(directoryPath);
 
     if (parentDirectoryPath === directoryPath) {
-      throw new Error(`No "${fileName}" file found.`);
+      return false;
     }
 
     return findNearestFile(fileName, parentDirectoryPath);

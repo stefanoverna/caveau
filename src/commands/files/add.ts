@@ -1,10 +1,12 @@
-import {} from 'node:fs';
 import { dirname, relative } from 'node:path';
 import { command, positional } from 'cmd-ts';
+import parser from 'gitignore-parser';
 import { sortedUniq } from 'lodash-es';
 import { File } from '../../utils/File';
 import { configFile } from '../../utils/configFile';
 import { encryptFileAndWrite } from '../../utils/encryption';
+import { safeFindNearestFile } from '../../utils/findNearestFile';
+import { readFile } from '../../utils/readWrite';
 
 export default command({
   name: 'files:add',
@@ -20,11 +22,25 @@ export default command({
   handler: async ({ path }) => {
     const [config, write, configPath] = await configFile();
 
-    const normalizedPath = relative(dirname(configPath), path);
+    const relativePathToConfigPath = relative(dirname(configPath), path);
+    const relativePathToCwd = relative(process.cwd(), path);
 
-    config.files = sortedUniq([...config.files, normalizedPath]);
+    config.files = sortedUniq([...config.files, relativePathToConfigPath]);
 
     await write(config);
     await encryptFileAndWrite(path);
+
+    const gitIgnorePath = await safeFindNearestFile('.gitignore');
+    if (gitIgnorePath) {
+      const gitIgnore = parser.compile(readFile(gitIgnorePath));
+      const relativePathForGitIgnore = relative(dirname(gitIgnorePath), path);
+
+      if (!gitIgnore.denies(relativePathForGitIgnore)) {
+        console.log();
+        console.log(
+          `WARNING: ${relativePathToCwd} is NOT excluded by .gitignore!`,
+        );
+      }
+    }
   },
 });

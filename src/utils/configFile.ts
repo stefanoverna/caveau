@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { findNearestFile } from './findNearestFile';
+import { findNearestFile, safeFindNearestFile } from './findNearestFile';
 import { readFile, writeFile } from './readWrite';
 
 const ConfigFileSchema = v.object({
@@ -16,14 +16,14 @@ export type ConfigFile = v.InferOutput<typeof ConfigFileSchema>;
 
 export const configFilename = '.caveau.json';
 
-export function findConfigFilePath(): Promise<string> {
-  return findNearestFile(configFilename);
+export function safeFindConfigFilePath() {
+  return safeFindNearestFile(configFilename);
 }
 
 export async function configFile(): Promise<
   [ConfigFile, (data: ConfigFile) => void, string]
 > {
-  const path = await findConfigFilePath();
+  const path = await findNearestFile(configFilename);
   const result = v.safeParse(ConfigFileSchema, JSON.parse(readFile(path)));
 
   if (!result.success) {
