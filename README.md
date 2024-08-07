@@ -47,18 +47,22 @@ npx caveau files:add <path>
 Decrypts all secret files or specific files provided.
 
 ```sh
-npx caveau files:decrypt [...<files>]
+npx caveau files:decrypt [options] [...<paths>]
 ```
 
 **Arguments:**
-- `files`: Paths of the secret files to decrypt (optional, if not provided, all secret files will be decrypted).
+- `paths`: Paths of the secret files to decrypt (optional, if not provided, all secret files will be decrypted).
+
+**Options:**
+- `-o`, `--stdout`: Should the decrypted content be written to stdout instead?
+```
 
 ### `files:edit`
 
 Opens the default file editor to change the contents of a secret file, then re-encrypts it.
 
 ```sh
-npx caveau files:edit <path> [options]
+npx caveau files:edit [options] <path>
 ```
 
 **Arguments:**
@@ -81,11 +85,11 @@ npx caveau files:reencrypt
 Removes a file from the list of secret files to manage and deletes the encrypted version.
 
 ```sh
-npx caveau files:remove ...<files>]
+npx caveau files:remove ...<paths>
 ```
 
 **Arguments:**
-- `files`: Paths of the secret file to remove.
+- `[paths]`: Paths of the secret file to remove.
 
 ## Configuration
 
