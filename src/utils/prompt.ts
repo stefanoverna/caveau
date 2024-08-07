@@ -7,7 +7,7 @@ import { writeFile } from './readWrite';
 const homeDir =
   process.platform === 'win32' ? process.env.USERPROFILE : process.env.HOME;
 
-export const privateKeyFilename = '.caveau-secretkey';
+export const privateKeyFilename = '.caveau-privatekey';
 export const privateKeyFilePath = homeDir && join(homeDir, privateKeyFilename);
 
 export const privateKey = option({
