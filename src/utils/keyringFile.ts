@@ -36,7 +36,7 @@ export async function recipientPublicKeys() {
       : config.recipients.ids.map((id) => {
           if (!(id in keyring)) {
             throw new Error(
-              `No public key for recipient "${id}" found in keyring`,
+              `No public key for recipient "${id}" found in keyring.`,
             );
           }
 
@@ -44,7 +44,7 @@ export async function recipientPublicKeys() {
         });
 
   if (publicKeys.length === 0) {
-    throw new Error('No recipients defined in config file');
+    throw new Error('No recipients defined in config file.');
   }
 
   return publicKeys;

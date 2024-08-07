@@ -11,7 +11,7 @@ export async function findNearestFile(
     const statResult = await stat(path);
 
     if (!statResult.isFile()) {
-      throw new Error('Not a file');
+      throw new Error('Not a file.');
     }
 
     return path;
@@ -19,7 +19,7 @@ export async function findNearestFile(
     const parentDirectoryPath = dirname(directoryPath);
 
     if (parentDirectoryPath === directoryPath) {
-      throw new Error(`No "${fileName}" file found`);
+      throw new Error(`No "${fileName}" file found.`);
     }
 
     return findNearestFile(fileName, parentDirectoryPath);

@@ -7,7 +7,7 @@ import { writeFile } from './readWrite';
 const homeDir =
   process.platform === 'win32' ? process.env.USERPROFILE : process.env.HOME;
 
-const privateKeyFilename = '.caveau-secretkey';
+export const privateKeyFilename = '.caveau-secretkey';
 export const privateKeyFilePath = homeDir && join(homeDir, privateKeyFilename);
 
 export const privateKey = option({
@@ -23,11 +23,13 @@ export function askPrivateKey() {
     return readFileSync(privateKeyFilePath, 'utf-8');
   }
 
+  console.log();
+
   const prompter = prompt();
   const privateKey = prompter('Please enter your private key: ', { echo: '*' });
 
   if (!privateKey) {
-    throw new Error('No private key provided!');
+    return askPrivateKey();
   }
 
   if (privateKeyFilePath) {
@@ -40,6 +42,8 @@ export function askPrivateKey() {
 }
 
 export function confirm(question: string): boolean {
+  console.log();
+
   const prompter = prompt();
   const response = prompter(`${question} (y/n) `);
 

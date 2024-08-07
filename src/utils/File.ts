@@ -20,7 +20,7 @@ export const File = extendType(ExistingPath, {
     if (stat.isFile()) {
       return resolved;
     }
-    throw new Error('Provided path is not a file');
+    throw new Error('Provided path is not a file.');
   },
   displayName: 'file',
   description: 'A file in the file system',
