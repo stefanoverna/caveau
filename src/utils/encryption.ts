@@ -57,20 +57,30 @@ export async function decryptFileAndWrite(
   writeFile(path, await decryptFile(path, privateKey));
 }
 
-export async function reEncryptFile(
+export async function processAndMaybeReEncryptFile(
   path: string,
   privateKey = askPrivateKey(),
   processContent = async (content: string) => content,
-): Promise<void> {
+): Promise<boolean> {
   const content = await decryptFile(path, privateKey);
   const processedContent = await processContent(content);
 
   if (content === processedContent) {
     console.log('Secret file not changed.');
-    return;
+    return false;
   }
 
   writeFile(`${path}.enc`, await encryptMessage(processedContent));
+
+  return true;
+}
+
+export async function reEncryptFile(
+  path: string,
+  privateKey = askPrivateKey(),
+): Promise<boolean> {
+  const content = await decryptFile(path, privateKey);
+  writeFile(`${path}.enc`, await encryptMessage(content));
 }
 
 export async function reEncryptAllFiles(

@@ -2,7 +2,10 @@ import { boolean, command, flag, positional } from 'cmd-ts';
 import openEditor from 'open-editor';
 import { temporaryFileTask } from 'tempy';
 import { File } from '../../utils/File';
-import { decryptFileAndWrite, reEncryptFile } from '../../utils/encryption';
+import {
+  decryptFileAndWrite,
+  processAndMaybeReEncryptFile,
+} from '../../utils/encryption';
 import { confirm, privateKey } from '../../utils/prompt';
 import { readFile, writeFile } from '../../utils/readWrite';
 
@@ -24,17 +27,21 @@ export default command({
     }),
   },
   handler: async ({ path, privateKey, decrypt }) => {
-    await reEncryptFile(path, privateKey, async (content) => {
-      return await temporaryFileTask(async (temporaryFile) => {
-        writeFile(temporaryFile, content);
-        await openEditor([{ file: temporaryFile }], { wait: true });
-        return readFile(temporaryFile);
-      });
-    });
+    const changed = await processAndMaybeReEncryptFile(
+      path,
+      privateKey,
+      async (content) => {
+        return await temporaryFileTask(async (temporaryFile) => {
+          writeFile(temporaryFile, content);
+          await openEditor([{ file: temporaryFile }], { wait: true });
+          return readFile(temporaryFile);
+        });
+      },
+    );
 
     if (
-      decrypt ||
-      confirm(`Do you also want write the new content in ${path}?`)
+      changed &&
+      (decrypt || confirm(`Do you also want write the new content in ${path}?`))
     ) {
       decryptFileAndWrite(path, privateKey);
     }

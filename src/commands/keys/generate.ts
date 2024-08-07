@@ -25,7 +25,9 @@ export default command({
     const privateKey = generateIdentity();
     const publicKey = identityToRecipient(privateKey);
 
-    console.log('=== Public key (to be added to keyring) ===');
+    console.log(
+      '=== Public key (to be added to keyring, share it with others) ===',
+    );
     console.log(publicKey);
     console.log();
     console.log('=== Private key (NEVER SHARE TO ANYONE, KEEP IT SAFE!) ===');
@@ -35,7 +37,7 @@ export default command({
       privateKeyFilePath &&
       (savePrivateKey ||
         confirm(
-          `Do you wish to save your private key in ~/${privateKeyFilename}?`,
+          `Recommended choice: do you wish to save your private key in ~/${privateKeyFilename}?`,
         ))
     ) {
       if (existsSync(privateKeyFilePath)) {

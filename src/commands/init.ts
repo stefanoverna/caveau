@@ -46,8 +46,6 @@ export default command({
         },
         path,
       );
-
-      console.log(`Created config file at ${path}`);
     }
   },
 });
