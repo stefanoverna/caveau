@@ -1,5 +1,6 @@
+import { resolve } from 'node:path';
 import { boolean, command, flag, restPositionals } from 'cmd-ts';
-import { File } from '../../utils/File';
+import { ResolvedPath } from '../../utils/File';
 import { configFile } from '../../utils/configFile';
 import { decryptFile, decryptFileAndWrite } from '../../utils/encryption';
 import { privateKey } from '../../utils/prompt';
@@ -9,8 +10,8 @@ export default command({
   description: 'Decrypt all secret files (or a specific one)',
   args: {
     explicitPaths: restPositionals({
-      type: File,
-      displayName: 'Paths of the secrets files to decrypt',
+      type: ResolvedPath,
+      displayName: 'Paths of the secret files to decrypt',
     }),
     privateKey,
     toStdout: flag({
@@ -21,9 +22,12 @@ export default command({
     }),
   },
   handler: async ({ explicitPaths, privateKey, toStdout }) => {
-    const [config] = await configFile();
+    const [config, _, configFilePath] = await configFile();
 
-    const paths = explicitPaths.length > 0 ? explicitPaths : config.files;
+    const paths =
+      explicitPaths.length > 0
+        ? explicitPaths
+        : config.files.map((path) => resolve(configFilePath, path));
 
     for (const file of paths) {
       if (toStdout) {

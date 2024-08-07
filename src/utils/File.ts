@@ -2,15 +2,22 @@ import { existsSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { extendType, string } from 'cmd-ts';
 
-export const ExistingPath = extendType(string, {
+export const ResolvedPath = extendType(string, {
+  displayName: 'path',
+  description: 'A file path',
+  async from(str) {
+    return resolve(str);
+  },
+});
+
+export const ExistingPath = extendType(ResolvedPath, {
   displayName: 'path',
   description: 'An existing path',
   async from(str) {
-    const resolved = resolve(str);
-    if (!existsSync(resolved)) {
+    if (!existsSync(str)) {
       throw new Error("Path doesn't exist");
     }
-    return resolved;
+    return str;
   },
 });
 
