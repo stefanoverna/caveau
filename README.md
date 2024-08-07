@@ -55,7 +55,6 @@ npx caveau files:decrypt [options] [...<paths>]
 
 **Options:**
 - `-o`, `--stdout`: Should the decrypted content be written to stdout instead?
-```
 
 ### `files:edit`
 
