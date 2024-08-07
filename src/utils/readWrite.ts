@@ -1,14 +1,14 @@
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { relative } from 'node:path';
 
-export function writeFile(path: string, content: string) {
-  writeFileSync(path, content, 'utf-8');
+export function writeFile(path: string, content: string, mode = 0o666) {
+  writeFileSync(path, content, { encoding: 'utf-8', mode: mode });
   const relativePath = relative(process.cwd(), path);
   console.log(`Written ${relativePath}`);
 }
 
 export function readFile(path: string) {
-  return readFileSync(path, 'utf-8');
+  return readFileSync(path, { encoding: 'utf-8' });
 }
 
 export function deleteFile(path: string) {

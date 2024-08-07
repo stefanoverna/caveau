@@ -44,7 +44,7 @@ export default command({
         throw new Error(`File ~/${privateKeyFilename} already exists.`);
       }
 
-      writeFile(privateKeyFilePath, privateKey);
+      writeFile(privateKeyFilePath, privateKey, 0o600);
     }
   },
 });
