@@ -22,10 +22,10 @@ export default command({
   handler: async ({ path }) => {
     const [config, write, configPath] = await configFile();
 
-    const relativePathToConfigPath = relative(dirname(configPath), path);
-    const relativePathToCwd = relative(process.cwd(), path);
+    const pathRelativeToConfigPath = relative(dirname(configPath), path);
+    const pathRelativeToCwd = relative(process.cwd(), path);
 
-    config.files = sortedUniq([...config.files, relativePathToConfigPath]);
+    config.files = sortedUniq([...config.files, pathRelativeToConfigPath]);
 
     await write(config);
     await encryptFileAndWrite(path);
@@ -34,12 +34,12 @@ export default command({
     if (gitIgnorePath) {
       const gitIgnore = ignore().add(readFile(gitIgnorePath));
 
-      const relativePathForGitIgnore = relative(dirname(gitIgnorePath), path);
+      const pathRelativeToGitIgnore = relative(dirname(gitIgnorePath), path);
 
-      if (!gitIgnore.ignores(relativePathForGitIgnore)) {
+      if (!gitIgnore.ignores(pathRelativeToGitIgnore)) {
         console.log();
         console.log(
-          `WARNING: ${relativePathToCwd} is NOT excluded by .gitignore!`,
+          `WARNING: ${pathRelativeToCwd} is NOT excluded by .gitignore!`,
         );
       }
     }

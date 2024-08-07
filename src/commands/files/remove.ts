@@ -19,8 +19,8 @@ export default command({
     const [config, write, configPath] = await configFile();
 
     for (const path of paths) {
-      const normalizedPath = relative(dirname(configPath), path);
-      config.files = without(config.files, normalizedPath);
+      const pathRelativeToConfigPath = relative(dirname(configPath), path);
+      config.files = without(config.files, pathRelativeToConfigPath);
       deleteFile(`${path}.enc`);
     }
 
