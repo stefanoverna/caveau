@@ -7,7 +7,11 @@ const ConfigFileSchema = v.object({
   keyring: v.pipe(v.string(), v.url()),
   recipients: v.variant('type', [
     v.object({ type: v.literal('all') }),
-    v.object({ type: v.literal('subset'), ids: v.array(v.string()) }),
+    v.object({
+      type: v.literal('subset'),
+      publicKeyIds: v.optional(v.array(v.string())),
+      teamIds: v.optional(v.array(v.string())),
+    }),
   ]),
   files: v.array(v.string()),
 });

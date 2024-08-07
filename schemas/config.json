@@ -32,15 +32,22 @@
               "const": "subset",
               "description": "Indicates that a subset of public key IDs are recipients."
             },
-            "ids": {
+            "publicKeyIds": {
               "type": "array",
               "items": {
                 "type": "string",
                 "description": "A list of public key IDs that are recipients."
               }
+            },
+            "teamIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "A list of team IDs that are recipients."
+              }
             }
           },
-          "required": ["type", "ids"],
+          "required": ["type"],
           "additionalProperties": false
         }
       ]

@@ -13,6 +13,14 @@
         "type": "string",
         "pattern": "^age"
       }
+    },
+    "teams": {
+      "type": "object",
+      "description": "A list team keys, organized by ID.",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string", "description": "ID of a public key" }
+      }
     }
   },
   "required": ["publicKeys"],

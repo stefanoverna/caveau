@@ -102,7 +102,8 @@ Here is an example configuration:
   "keyring": "https://example.com/keyring.json",
   "recipients": {
     "type": "subset",
-    "ids": ["recipient1", "recipient2"]
+    "teamIds": ["devs"],
+    "publicKeyIds": ["sarah"]
   },
   "files": ["secrets/file1.txt", "secrets/file2.txt"]
 }
@@ -127,8 +128,14 @@ Example keyring schema:
 {
   "$schema": "https://unpkg.com/caveau@0.2.0/schemas/keyring.json",
   "publicKeys": {
-    "recipient1": "age...",
-    "recipient2": "age..."
+    "mark": "age...",
+    "tom": "age...",
+    "sarah": "age...",
+    "alice": "age..."
+  },
+  "teams": {
+    "devs": ["mark", "tom"],
+    "support": ["alice"]
   }
 }
 ```
