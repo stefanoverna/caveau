@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri"
+    },
+    "keyring": {
+      "type": "string",
+      "description": "The URL of the keyring that stores all public keys by ID.",
+      "format": "uri"
+    },
+    "recipients": {
+      "description": "Indicates which recipients in the keyring can decrypt the files.",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "all",
+              "description": "Indicates that all public key IDs in the keyring are valid recipients."
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "subset",
+              "description": "Indicates that a subset of public key IDs are recipients."
+            },
+            "ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "A list of public key IDs that are recipients."
+              }
+            }
+          },
+          "required": ["type", "ids"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "files": {
+      "type": "array",
+      "description": "A list of files managed by caveau.",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["keyring", "recipients", "files"],
+  "additionalProperties": false
+}

@@ -1,0 +1,37 @@
+{
+  "name": "caveau",
+  "version": "0.1.1",
+  "description": "Easy file repository encryption tool based on age, focused on simplicity and gitops",
+  "main": "index.js",
+  "type": "module",
+  "bin": "bin/caveau.mjs",
+  "scripts": {
+    "test": "echo 1",
+    "build": "rimraf dist && tsc-multi",
+    "prepare": "npm run build",
+    "format": "biome check --write --unsafe"
+  },
+  "files": ["bin", "dist", "schemas"],
+  "author": "Stefano Verna <s.verna@datocms.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "age-encryption": "^0.1.5",
+    "cmd-ts": "^0.13.0",
+    "cross-fetch": "^4.0.0",
+    "lodash-es": "^4.17.21",
+    "open-editor": "^5.0.0",
+    "prompt-sync": "^4.2.0",
+    "tempy": "^3.1.0",
+    "valibot": "^0.37.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@types/node": "^22.1.0",
+    "@types/prompt-sync": "^4.2.3",
+    "np": "^10.0.7",
+    "rimraf": "^5.0.10",
+    "tsc-multi": "^1.1.0",
+    "typescript": "^5.5.4"
+  }
+}
