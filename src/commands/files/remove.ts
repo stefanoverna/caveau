@@ -1,24 +1,28 @@
 import { dirname, relative } from 'node:path';
-import { command, positional } from 'cmd-ts';
+import { command, restPositionals } from 'cmd-ts';
 import { without } from 'lodash-es';
 import { File } from '../../utils/File';
 import { configFile } from '../../utils/configFile';
+import { deleteFile } from '../../utils/readWrite';
 
 export default command({
   name: 'files:remove',
-  description: 'Removes a file from the list of secrets files to manage',
+  description:
+    'Removes a file from the list of secrets files to manage, and deletes the encrypted version',
   args: {
-    path: positional({
+    paths: restPositionals({
       type: File,
       displayName: 'Path of the file to remove',
     }),
   },
-  handler: async ({ path }) => {
+  handler: async ({ paths }) => {
     const [config, write, configPath] = await configFile();
 
-    const normalizedPath = relative(dirname(configPath), path);
-
-    config.files = without(config.files, normalizedPath);
+    for (const path of paths) {
+      const normalizedPath = relative(dirname(configPath), path);
+      config.files = without(config.files, normalizedPath);
+      deleteFile(`${path}.enc`);
+    }
 
     write(config);
   },

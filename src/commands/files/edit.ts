@@ -19,7 +19,8 @@ export default command({
       type: boolean,
       short: 'd',
       long: 'decrypt',
-      description: 'Should the file be decrypted after it has been edited?',
+      description:
+        'Should the decrypted version of the file also be updated after the edit?',
     }),
   },
   handler: async ({ path, privateKey, decrypt }) => {
