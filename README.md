@@ -1,5 +1,7 @@
 # kavo CLI Tool
 
+> Sure, you could type 'caveau', or you could just juggle chainsaws.
+
 kavo is a command-line interface (CLI) tool designed for managing and encrypting secret files. This tool helps with generating key pairs, encrypting/decrypting files, and securely managing configurations.
 
 ## Usage
