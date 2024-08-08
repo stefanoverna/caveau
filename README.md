@@ -36,11 +36,11 @@ npx caveau keys:generate [options]
 Adds a new file to the list of secret files to manage and encrypts it.
 
 ```sh
-npx caveau files:add <path>
+npx caveau files:add ...<paths>
 ```
 
 **Arguments:**
-- `path`: Path of the secrets file to encode and add to the config file.
+- `paths`: Paths of the secret files to encode and add to the config file.
 
 ### `files:decrypt`
 

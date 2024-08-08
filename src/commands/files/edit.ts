@@ -1,3 +1,4 @@
+import { writeFile } from 'node:fs/promises';
 import { boolean, command, flag, positional } from 'cmd-ts';
 import openEditor from 'open-editor';
 import { temporaryFileTask } from 'tempy';
@@ -7,7 +8,7 @@ import {
   processAndMaybeReEncryptFile,
 } from '../../utils/encryption';
 import { confirm, privateKey } from '../../utils/prompt';
-import { readFile, writeFile } from '../../utils/readWrite';
+import { readFile } from '../../utils/readWrite';
 
 export default command({
   name: 'files:edit',
@@ -32,7 +33,7 @@ export default command({
       privateKey,
       async (content) => {
         return await temporaryFileTask(async (temporaryFile) => {
-          writeFile(temporaryFile, content);
+          await writeFile(temporaryFile, content, { encoding: 'utf-8' });
           await openEditor([{ file: temporaryFile }], { wait: true });
           return readFile(temporaryFile);
         });
