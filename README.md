@@ -1,23 +1,23 @@
-# Caveau CLI Tool
+# kavo CLI Tool
 
-Caveau is a command-line interface (CLI) tool designed for managing and encrypting secret files. This tool helps with generating key pairs, encrypting/decrypting files, and securely managing configurations.
+kavo is a command-line interface (CLI) tool designed for managing and encrypting secret files. This tool helps with generating key pairs, encrypting/decrypting files, and securely managing configurations.
 
 ## Usage
 
-You can use the `caveau` command followed by one of the available subcommands:
+You can use the `kavo` command followed by one of the available subcommands:
 
 ```sh
-npx caveau <command> [options]
+npx kavo <command> [options]
 ```
 
 ## Commands
 
 ### `init`
 
-Initializes a configuration file (`.caveau.json`) in the current directory.
+Initializes a configuration file (`.kavo.json`) in the current directory.
 
 ```sh
-npx caveau init
+npx kavo init
 ```
 
 ### `keys:generate`
@@ -25,18 +25,18 @@ npx caveau init
 Generates a new pair of private and public keys.
 
 ```sh
-npx caveau keys:generate [options]
+npx kavo keys:generate [options]
 ```
 
 **Options:**
-- `-s`, `--save-private-key`: Save the private key in the user's home directory (`~/.caveau-secretkey`).
+- `-s`, `--save-private-key`: Save the private key in the user's home directory (`~/.kavo-secretkey`).
 
 ### `files:add`
 
 Adds a new file to the list of secret files to manage and encrypts it.
 
 ```sh
-npx caveau files:add ...<paths>
+npx kavo files:add ...<paths>
 ```
 
 **Arguments:**
@@ -47,7 +47,7 @@ npx caveau files:add ...<paths>
 Decrypts all secret files or specific files provided.
 
 ```sh
-npx caveau files:decrypt [options] [...<paths>]
+npx kavo files:decrypt [options] [...<paths>]
 ```
 
 **Arguments:**
@@ -61,7 +61,7 @@ npx caveau files:decrypt [options] [...<paths>]
 Opens the default file editor to change the contents of a secret file, then re-encrypts it.
 
 ```sh
-npx caveau files:edit [options] <path>
+npx kavo files:edit [options] <path>
 ```
 
 **Arguments:**
@@ -76,7 +76,7 @@ npx caveau files:edit [options] <path>
 Re-encrypts all secret files (useful when recipients change).
 
 ```sh
-npx caveau files:reencrypt
+npx kavo files:reencrypt
 ```
 
 ### `files:remove`
@@ -84,7 +84,7 @@ npx caveau files:reencrypt
 Removes a file from the list of secret files to manage and deletes the encrypted version.
 
 ```sh
-npx caveau files:remove ...<paths>
+npx kavo files:remove ...<paths>
 ```
 
 **Arguments:**
@@ -92,13 +92,13 @@ npx caveau files:remove ...<paths>
 
 ## Configuration
 
-Caveau uses a configuration file named `.caveau.json` in the current directory. This file manages cryptographic settings and the list of encrypted files.
+kavo uses a configuration file named `.kavo.json` in the current directory. This file manages cryptographic settings and the list of encrypted files.
 
 Here is an example configuration:
 
 ```json
 {
-  "$schema": "https://unpkg.com/caveau@0.2.0/schemas/config.json",
+  "$schema": "https://unpkg.com/kavo@0.2.0/schemas/config.json",
   "keyring": "https://example.com/keyring.json",
   "recipients": {
     "type": "subset",
@@ -116,17 +116,17 @@ Here is an example configuration:
 - `recipients`:
   - `type`: Indicates which recipients in the keyring can decrypt the files (`all` or `subset`).
   - `ids`: If type is `subset`, this is the list of public key IDs.
-- `files`: List of files managed by Caveau.
+- `files`: List of files managed by kavo.
 
 ## Keyring
 
-Caveau also uses a `keyring.json` file to manage public keys.
+kavo also uses a `keyring.json` file to manage public keys.
 
 Example keyring schema:
 
 ```json
 {
-  "$schema": "https://unpkg.com/caveau@0.2.0/schemas/keyring.json",
+  "$schema": "https://unpkg.com/kavo@0.2.0/schemas/keyring.json",
   "publicKeys": {
     "mark": "age...",
     "tom": "age...",

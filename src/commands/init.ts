@@ -22,7 +22,7 @@ export default command({
 
     await writeConfigFile(
       {
-        $schema: `https://unpkg.com/caveau@${packageVersion}/schemas/config.json`,
+        $schema: `https://unpkg.com/kavo@${packageVersion}/schemas/config.json`,
         keyring: '',
         recipients: { type: 'all' },
         files: [],

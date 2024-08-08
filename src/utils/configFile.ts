@@ -18,7 +18,7 @@ const ConfigFileSchema = v.object({
 
 export type ConfigFile = v.InferOutput<typeof ConfigFileSchema>;
 
-export const configFilename = '.caveau.json';
+export const configFilename = '.kavo.json';
 
 export function safeFindConfigFilePath() {
   return safeFindNearestFile(configFilename);

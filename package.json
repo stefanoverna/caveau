@@ -1,10 +1,10 @@
 {
-  "name": "caveau",
+  "name": "kavo",
   "version": "0.2.15",
   "description": "Easy file repository encryption tool based on age, focused on simplicity and gitops",
   "main": "index.js",
   "type": "module",
-  "bin": "bin/caveau.mjs",
+  "bin": "bin/kavo.mjs",
   "scripts": {
     "test": "echo 1",
     "build": "rimraf dist && tsc-multi",

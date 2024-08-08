@@ -13,7 +13,7 @@ import filesRemove from './commands/files/remove';
 import { packageVersion } from './utils/packageVersion';
 
 export default subcommands({
-  name: 'caveau',
+  name: 'kavo',
   version: packageVersion,
   cmds: {
     init,
