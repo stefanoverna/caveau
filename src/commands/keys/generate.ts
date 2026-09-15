@@ -3,8 +3,8 @@ import { generateIdentity, identityToRecipient } from 'age-encryption';
 import { boolean, command, flag } from 'cmd-ts';
 import {
   confirm,
-  privateKeyFilePath,
   privateKeyFilename,
+  privateKeyFilePath,
 } from '../../utils/prompt';
 import { writeFile } from '../../utils/readWrite';
 

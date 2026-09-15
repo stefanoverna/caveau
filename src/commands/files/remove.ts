@@ -1,8 +1,8 @@
 import { dirname, relative } from 'node:path';
 import { command, restPositionals } from 'cmd-ts';
 import { without } from 'lodash-es';
-import { ResolvedPath } from '../../utils/File';
 import { configFile } from '../../utils/configFile';
+import { ResolvedPath } from '../../utils/File';
 import { deleteFile } from '../../utils/readWrite';
 
 export default command({

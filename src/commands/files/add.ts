@@ -2,9 +2,9 @@ import { dirname, relative } from 'node:path';
 import { command, restPositionals } from 'cmd-ts';
 import ignore from 'ignore';
 import { uniq } from 'lodash-es';
-import { File } from '../../utils/File';
 import { configFile } from '../../utils/configFile';
 import { encryptFileAndWrite } from '../../utils/encryption';
+import { File } from '../../utils/File';
 import { safeFindNearestFile } from '../../utils/findNearestFile';
 import { readFile } from '../../utils/readWrite';
 

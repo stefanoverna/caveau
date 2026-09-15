@@ -2,11 +2,11 @@ import { writeFile } from 'node:fs/promises';
 import { boolean, command, flag, positional } from 'cmd-ts';
 import openEditor from 'open-editor';
 import { temporaryFileTask } from 'tempy';
-import { ResolvedPath } from '../../utils/File';
 import {
   decryptFileAndWrite,
   processAndMaybeReEncryptFile,
 } from '../../utils/encryption';
+import { ResolvedPath } from '../../utils/File';
 import { confirm, privateKey } from '../../utils/prompt';
 import { readFile } from '../../utils/readWrite';
 

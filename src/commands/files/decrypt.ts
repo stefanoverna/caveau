@@ -9,9 +9,9 @@ import {
   string,
 } from 'cmd-ts';
 import { parse as parseDotEnv } from 'dotenv';
-import { ResolvedPath } from '../../utils/File';
 import { configFile } from '../../utils/configFile';
 import { decryptFile, decryptFileAndWrite } from '../../utils/encryption';
+import { ResolvedPath } from '../../utils/File';
 import { privateKey } from '../../utils/prompt';
 
 export default command({

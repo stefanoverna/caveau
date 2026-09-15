@@ -1,14 +1,11 @@
 import { subcommands } from 'cmd-ts';
-
-import init from './commands/init';
-
-import keysGenerate from './commands/keys/generate';
-
 import filesAdd from './commands/files/add';
 import filesDecrypt from './commands/files/decrypt';
 import filesEdit from './commands/files/edit';
 import filesReencrypt from './commands/files/reencrypt';
 import filesRemove from './commands/files/remove';
+import init from './commands/init';
+import keysGenerate from './commands/keys/generate';
 
 import { packageVersion } from './utils/packageVersion';
 

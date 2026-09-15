@@ -28,7 +28,7 @@ export async function safeFindNearestFile(
     }
 
     return path;
-  } catch (e) {
+  } catch (_e) {
     const parentDirectoryPath = dirname(directoryPath);
 
     if (parentDirectoryPath === directoryPath) {
